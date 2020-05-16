@@ -7,10 +7,10 @@ public class TestDao {
 	public static void main(String[] args) {
 		
 		EventsDao dao = new EventsDao();
-		for(Event e : dao.listAllEvents())
-			System.out.println(e);
-		/*for(String e : dao.getCategorie())
+		/*for(Event e : dao.listAllEvents())
 			System.out.println(e);*/
+		for(String e : dao.getCategorie())
+			System.out.println(e);
 	}
 
 }
