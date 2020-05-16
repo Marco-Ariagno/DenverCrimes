@@ -57,7 +57,18 @@ public class FXMLController {
     @FXML
     void doCreaGrafo(ActionEvent event) {
     	txtResult.clear();
-    	this.model.creaGrafo(boxCategoria.getValue(), boxMese.getValue());
+    	String categoria=boxCategoria.getValue();
+    	if(categoria==null) {
+    		txtResult.appendText("Seleziona categoria");
+    		return;
+    	}
+    	Integer mese=boxMese.getValue();
+    	if(mese==null) {
+    		txtResult.appendText("Seleziona mese");
+    		return;
+    	}
+    	
+    	this.model.creaGrafo(categoria, mese);
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
@@ -72,7 +83,7 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
-    	boxCategoria.getItems().addAll(model.getCategorie());
-    	boxMese.getItems().addAll(model.getMesi());
+    	boxCategoria.getItems().addAll(this.model.getCategorie());
+    	boxMese.getItems().addAll(this.model.getMesi());
     }
 }
