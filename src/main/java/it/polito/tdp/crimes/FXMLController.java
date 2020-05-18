@@ -13,6 +13,7 @@ import java.util.Set;
 
 import org.jgrapht.graph.DefaultWeightedEdge;
 
+import it.polito.tdp.crimes.model.Arco;
 import it.polito.tdp.crimes.model.Event;
 import it.polito.tdp.crimes.model.Model;
 import javafx.event.ActionEvent;
@@ -41,7 +42,7 @@ public class FXMLController {
     private Button btnAnalisi; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxArco"
-    private ComboBox<?> boxArco; // Value injected by FXMLLoader
+    private ComboBox<Arco> boxArco; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnPercorso"
     private Button btnPercorso; // Value injected by FXMLLoader
@@ -51,7 +52,17 @@ public class FXMLController {
 
     @FXML
     void doCalcolaPercorso(ActionEvent event) {
-
+    	txtResult.clear();
+    	Arco a=this.boxArco.getValue();
+    	if(a==null) {
+    		txtResult.appendText("Seleziona arco");
+    		return;
+    	}
+    	List<String> percorso=this.model.trovaPercorso(a.getV1(), a.getV2());
+    	txtResult.appendText("PERCORSO MIGLIORE\n\n");
+    	for(String v:percorso) {
+    		txtResult.appendText(v+"\n");
+    	}
     }
 
     @FXML
@@ -69,6 +80,13 @@ public class FXMLController {
     	}
     	
     	this.model.creaGrafo(categoria, mese);
+    	
+    	List<Arco> archi=this.model.getArchi();
+    	txtResult.appendText("Archi > peso medio:\n");
+    	for(Arco a: archi) {
+    		txtResult.appendText(a+"\n");
+    	}
+    	boxArco.getItems().addAll(archi);
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
